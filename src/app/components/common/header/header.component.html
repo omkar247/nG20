@@ -1,0 +1,19 @@
+<header class="app-header">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <h1>{{ appName }}</h1>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/about" routerLinkActive="active">
+          About
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
