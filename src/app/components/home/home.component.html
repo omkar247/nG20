@@ -1,0 +1,43 @@
+<div class="home-container">
+  <section class="welcome-section">
+    <h1>{{ message() }}</h1>
+    <h2>{{ greeting() }}</h2>
+    
+    <div class="user-input">
+      <input 
+        type="text"
+        [value]="userName()"
+        placeholder="Enter your name" 
+        (input)="updateUserName($any($event.target).value)"
+      >
+    </div>
+  </section>
+
+  <section class="counter-section">
+    <h3>Counter Demo (Signals + Service)</h3>
+    
+    <div class="counter-display">
+      <div class="count-item">
+        <span class="label">Count:</span>
+        <span class="value">{{ currentCount() }}</span>
+      </div>
+      <div class="count-item">
+        <span class="label">Double Count:</span>
+        <span class="value">{{ doubleCount() }}</span>
+      </div>
+    </div>
+
+    <div class="counter-controls">
+      <button (click)="incrementCounter()">+</button>
+      <button (click)="decrementCounter()">-</button>
+      <button (click)="resetCounter()">Reset</button>
+    </div>
+
+    <div class="history" *ngIf="history().length > 0">
+      <h4>History:</h4>
+      <div class="history-list">
+        <span *ngFor="let item of history()" class="history-item">{{ item }}</span>
+      </div>
+    </div>
+  </section>
+</div>

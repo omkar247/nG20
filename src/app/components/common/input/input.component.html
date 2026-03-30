@@ -1,0 +1,40 @@
+<div [class]="containerClasses">
+  @if (label) {
+    <label [for]="inputId" class="input-label">
+      {{ label }}
+      @if (required && showRequiredIndicator) {
+        <span class="required-indicator">*</span>
+      }
+    </label>
+  }
+
+  <div class="input-wrapper">
+    @if (iconClass) {
+      <i [class]="iconClass" class="input-icon"></i>
+    }
+    
+    <input
+      [id]="inputId"
+      [type]="type"
+      [class]="inputClasses"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [maxLength]="maxLength"
+      [minLength]="minLength"
+      [pattern]="pattern"
+      [autocomplete]="autocomplete"
+      (input)="onInputChange($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+    />
+  </div>
+
+  @if (error) {
+    <div class="input-error-message">
+      {{ error }}
+    </div>
+  }
+</div>

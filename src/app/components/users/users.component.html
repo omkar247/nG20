@@ -1,0 +1,61 @@
+<div class="users-container">
+  <div class="users-content">
+    <div *ngIf="isLoading" class="loading">Loading users...</div>
+    
+    <div *ngIf="!isLoading && users.length === 0" class="no-users">
+      No users found.
+    </div>
+
+    <div class="users-grid" *ngIf="!isLoading && users.length > 0">
+      <div class="user-card" *ngFor="let user of users" (click)="showUserDetails(user)">
+        <div class="user-avatar">
+          {{ user.name.charAt(0).toUpperCase() }}
+        </div>
+        <div class="user-info">
+          <h3>{{ user.name }}</h3>
+          <p>{{ user.email }}</p>
+          <span class="user-role">{{ user.role }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Details Popup -->
+<div class="popup-overlay" *ngIf="showPopup" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>User Details</h2>
+      <button class="close-btn" (click)="closePopup()">
+        <span>×</span>
+      </button>
+    </div>
+    
+    <div class="popup-body" *ngIf="selectedUser">
+      <div class="user-detail-avatar">
+        {{ selectedUser.name.charAt(0).toUpperCase() }}
+      </div>
+      
+      <div class="user-details">
+        <div class="detail-item">
+          <strong>Name:</strong> {{ selectedUser.name }}
+        </div>
+        <div class="detail-item">
+          <strong>Email:</strong> {{ selectedUser.email }}
+        </div>
+        <div class="detail-item">
+          <strong>Phone:</strong> {{ selectedUser.phone }}
+        </div>
+        <div class="detail-item">
+          <strong>Address:</strong> {{ selectedUser.address }}
+        </div>
+        <div class="detail-item">
+          <strong>Role:</strong> 
+          <span class="role-badge" [class.admin]="selectedUser.role === 'admin'">
+            {{ selectedUser.role }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
