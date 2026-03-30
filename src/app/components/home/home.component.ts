@@ -1,6 +1,8 @@
 import { Component, signal, computed, ChangeDetectionStrategy, Injector, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CounterService } from '../../services/counter.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +13,21 @@ import { CounterService } from '../../services/counter.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-   message = signal('Welcome !');
-   userName = signal('Guest');
-  
-   greeting = computed(() => `Hello, ${this.userName()}!`);
-  
-private counterService = inject(CounterService);
+   private counterService = inject(CounterService);
+   private authService = inject(AuthService);
 
- currentCount = this.counterService.getCurrentCount();
- doubleCount = this.counterService.doubleCount;
- history = this.counterService.getHistory();
+   message = signal('Welcome !');
+   
+   currentUser$ = this.authService.currentUser$;
+   isAuthenticated$ = this.authService.isAuthenticated$;
+   
+   userName = signal<string>('');
+   currentUser = toSignal(this.currentUser$, { initialValue: null });
+   greeting = computed(() => `Hello, ${this.userName() || this.currentUser()?.name || 'Guest'}!`);
+
+   currentCount = this.counterService.getCurrentCount();
+   doubleCount = this.counterService.doubleCount;
+   history = this.counterService.getHistory();
 
 
  

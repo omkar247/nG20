@@ -3,17 +3,55 @@
     <div class="nav-brand">
       <h1>{{ appName }}</h1>
     </div>
-    <ul class="nav-links">
-      <li>
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          Home
-        </a>
-      </li>
-      <li>
-        <a routerLink="/about" routerLinkActive="active">
-          About
-        </a>
-      </li>
-    </ul>
+    <div class="nav-content">
+      <ul class="nav-links" *ngIf="isAuthenticated$ | async">
+        <li>
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/about" routerLinkActive="active">
+            About
+          </a>
+        </li>
+        <li>
+          <a routerLink="/users" routerLinkActive="active">
+            Users
+          </a>
+        </li>
+      </ul>
+      
+      <div class="auth-buttons">
+        <!-- Show user info and logout when authenticated -->
+        <ng-container *ngIf="isAuthenticated$ | async">
+          <span class="user-info" *ngIf="currentUser$ | async as user">
+            Welcome, {{ user.name }}
+          </span>
+          <app-button 
+            buttonText="Logout" 
+            variant="secondary" 
+            size="small"
+            (buttonClick)="logout()">
+          </app-button>
+        </ng-container>
+        
+        <!-- Show login/signup buttons when not authenticated -->
+        <ng-container *ngIf="!(isAuthenticated$ | async)">
+          <app-button 
+            buttonText="Login" 
+            variant="primary" 
+            size="small"
+            (buttonClick)="login()">
+          </app-button>
+          <app-button 
+            buttonText="Sign Up" 
+            variant="success" 
+            size="small"
+            (buttonClick)="signup()">
+          </app-button>
+        </ng-container>
+      </div>
+    </div>
   </nav>
 </header>

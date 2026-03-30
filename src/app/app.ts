@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/common/header/header.component';
 import { FooterComponent } from './components/common/footer/footer.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -20,5 +21,10 @@ import { FooterComponent } from './components/common/footer/footer.component';
 export class App {
    title = signal('nG20');
    description = signal('Learning Signals, Zoneless, OnPush, and Standalone Components');
+
+  private authService = inject(AuthService);
+
+  currentUser$ = this.authService.currentUser$;
+  isAuthenticated$ = this.authService.isAuthenticated$;
 
 }

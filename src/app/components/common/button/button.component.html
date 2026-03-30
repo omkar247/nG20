@@ -1,0 +1,14 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="disabled || loading"
+  (click)="onClick()"
+>
+  @if (loading) {
+    <span class="btn-spinner"></span>
+  }
+  @if (iconClass && !loading) {
+    <i [class]="iconClass"></i>
+  }
+  <span class="btn-text">{{ displayText }}</span>
+</button>
